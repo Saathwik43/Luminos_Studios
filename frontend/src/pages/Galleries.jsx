@@ -19,7 +19,7 @@ const Galleries = () => {
 
     const fetchData = async () => {
       try {
-        const catRes = await fetch('http://localhost:5000/api/categories');
+        const catRes = await fetch('https://bw-backend-t2ky.onrender.com/api/categories');
         const catData = await catRes.json();
         setCategories(catData);
         
@@ -32,7 +32,7 @@ const Galleries = () => {
           if (found) setActiveCategory(found._id);
         }
 
-        const imgRes = await fetch('http://localhost:5000/api/images');
+        const imgRes = await fetch('https://bw-backend-t2ky.onrender.com/api/images');
         const imgData = await imgRes.json();
         setImages(imgData);
         setLoading(false);

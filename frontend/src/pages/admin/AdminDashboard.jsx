@@ -19,7 +19,7 @@ const AdminDashboard = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/categories');
+      const res = await fetch('https://bw-backend-t2ky.onrender.com/api/categories');
       const data = await res.json();
       setCategories(data);
       if (data.length > 0 && !uploadCategory) {
@@ -32,7 +32,7 @@ const AdminDashboard = () => {
 
   const fetchImages = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/images');
+      const res = await fetch('https://bw-backend-t2ky.onrender.com/api/images');
       const data = await res.json();
       setImages(data);
     } catch (err) {
@@ -55,7 +55,7 @@ const AdminDashboard = () => {
     if (!newCategoryName) return;
     
     try {
-      const res = await fetch('http://localhost:5000/api/categories', {
+      const res = await fetch('https://bw-backend-t2ky.onrender.com/api/categories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ const AdminDashboard = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/images', {
+      const res = await fetch('https://bw-backend-t2ky.onrender.com/api/images', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -157,7 +157,7 @@ const AdminDashboard = () => {
     if (!window.confirm('Are you sure you want to delete this image?')) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/images/${id}`, {
+      const res = await fetch(`https://bw-backend-t2ky.onrender.com/api/images/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
