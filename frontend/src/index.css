@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,25 +6,72 @@
 
 @layer base {
   body {
-    @apply bg-bw-black text-bw-white font-sans antialiased;
+    @apply bg-[#0A0A0C] text-[#F3F4F6] font-sans antialiased selection:bg-amber-500/30 selection:text-white;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply font-serif tracking-wide text-white;
   }
 }
 
 @layer components {
+  /* Premium Glassmorphism Cards */
+  .glassmorphism {
+    @apply bg-[#131316]/75 backdrop-blur-xl border border-white/[0.06] shadow-2xl;
+  }
+
+  .glassmorphism-interactive {
+    @apply glassmorphism hover:bg-[#18181F]/90 hover:border-amber-500/20 hover:shadow-amber-500/[0.03] transition-all duration-500 ease-out;
+  }
+
+  /* Luxurious Gold & Amber Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-3 bg-bw-white text-bw-black font-medium hover:bg-bw-light transition-colors duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold tracking-wide rounded-sm hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/25 transition-all duration-300 transform active:scale-95;
   }
   
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-3 border border-bw-gray text-bw-white font-medium hover:border-bw-white transition-colors duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-8 py-3 border border-white/10 text-white font-medium tracking-wide rounded-sm hover:border-amber-500/50 hover:bg-amber-500/[0.03] hover:text-amber-400 transition-all duration-300 transform active:scale-95;
+  }
+
+  .btn-gold-flat {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 font-medium rounded-sm hover:bg-amber-500/20 transition-all duration-300;
+  }
+  
+  /* Text Highlights */
+  .gold-gradient-text {
+    @apply bg-gradient-to-r from-amber-300 via-amber-400 to-amber-200 bg-clip-text text-transparent font-semibold;
   }
 }
 
-/* Custom cubic-bezier transition classes */
+/* Subtle luxury glows */
+.gold-glow {
+  box-shadow: 0 0 40px -10px rgba(245, 158, 11, 0.15);
+}
+
+.gold-glow-strong {
+  box-shadow: 0 0 60px -5px rgba(245, 158, 11, 0.25);
+}
+
+/* Scrollbar customizations */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0C;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1F1F24;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B45309;
+}
+
+/* Custom transitions */
 .transition-butter {
   transition-property: all;
   transition-duration: 600ms;
@@ -33,15 +80,15 @@
 
 .transition-butter-slow {
   transition-property: all;
-  transition-duration: 1000ms;
+  transition-duration: 1200ms;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Custom keyframes for premium animations */
+/* Custom premium animations */
 @keyframes butter-fade-up {
   0% {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(32px);
   }
   100% {
     opacity: 1;
@@ -56,14 +103,14 @@
   }
   100% {
     opacity: 1;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
   }
 }
 
 @keyframes butter-scale-in {
   0% {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
   100% {
     opacity: 1;
@@ -74,7 +121,7 @@
 @keyframes butter-slide-down {
   0% {
     opacity: 0;
-    transform: translateY(-16px);
+    transform: translateY(-20px);
   }
   100% {
     opacity: 1;
@@ -83,17 +130,17 @@
 }
 
 .animate-butter-fade-up {
-  animation: butter-fade-up 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: butter-fade-up 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-butter-fade-in {
-  animation: butter-fade-in 450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: butter-fade-in 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-butter-scale-in {
-  animation: butter-scale-in 550ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: butter-scale-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-butter-slide-down {
-  animation: butter-slide-down 450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: butter-slide-down 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

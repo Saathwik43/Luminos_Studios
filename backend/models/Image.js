@@ -16,6 +16,10 @@ const imageSchema = new mongoose.Schema({
   },
   caption: {
     type: String
+  },
+  order: {
+    type: Number,
+    default: 0
   }
 }, { timestamps: true });
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MessageCircle, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import LazyImage from '../components/LazyImage';
+import { API_URL } from '../config';
 
 const Galleries = () => {
   const [categories, setCategories] = useState([]);
@@ -19,7 +20,7 @@ const Galleries = () => {
 
     const fetchData = async () => {
       try {
-        const catRes = await fetch('https://bw-backend-t2ky.onrender.com/api/categories');
+        const catRes = await fetch(`${API_URL}/categories`);
         const catData = await catRes.json();
         setCategories(catData);
         
@@ -32,7 +33,7 @@ const Galleries = () => {
           if (found) setActiveCategory(found._id);
         }
 
-        const imgRes = await fetch('https://bw-backend-t2ky.onrender.com/api/images');
+        const imgRes = await fetch(`${API_URL}/images`);
         const imgData = await imgRes.json();
         setImages(imgData);
         setLoading(false);

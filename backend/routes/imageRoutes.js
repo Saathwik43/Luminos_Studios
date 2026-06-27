@@ -3,7 +3,9 @@ const router = express.Router();
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('cloudinary').v2;
+const mongoose = require('mongoose');
 const Image = require('../models/Image');
+const Category = require('../models/Category');
 const { protect } = require('../middleware/authMiddleware');
 
 // Configure Cloudinary
@@ -31,12 +33,39 @@ const upload = multer({ storage: storage });
 router.get('/', async (req, res) => {
   try {
     const categoryFilter = req.query.category ? { category: req.query.category } : {};
-    const images = await Image.find(categoryFilter).populate('category').sort({ createdAt: -1 });
+    const images = await Image.find(categoryFilter).populate('category').sort({ order: 1, createdAt: -1 });
     res.json(images);
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
 });
+
+// @route   PUT /api/images/reorder
+// @desc    Reorder images
+// @access  Private (Admin)
+router.put('/reorder', protect, async (req, res) => {
+  try {
+    const { imageIds } = req.body;
+    if (!imageIds || !Array.isArray(imageIds)) {
+      return res.status(400).json({ message: 'Invalid image IDs payload' });
+    }
+    
+    // Update each image's order
+    const bulkOps = imageIds.map((id, index) => ({
+      updateOne: {
+        filter: { _id: id },
+        update: { $set: { order: index } }
+      }
+    }));
+    
+    await Image.bulkWrite(bulkOps);
+    res.json({ message: 'Images reordered successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
 
 // @route   POST /api/images
 // @desc    Upload one or more images (up to 20 at once)
@@ -70,6 +99,46 @@ router.post('/', protect, upload.array('images', 20), async (req, res) => {
     }
 
     res.status(201).json(createdImages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+// @route   PUT /api/images/:id
+// @desc    Update an image's category or caption
+// @access  Private (Admin)
+router.put('/:id', protect, async (req, res) => {
+  try {
+    const { category, caption } = req.body;
+    const image = await Image.findById(req.params.id);
+
+    if (!image) {
+      return res.status(404).json({ message: 'Image not found' });
+    }
+
+    if (category !== undefined) {
+      // Check if it's a valid mongoose ObjectId
+      const isValidObjectId = mongoose.Types.ObjectId.isValid(category);
+      if (isValidObjectId) {
+        image.category = category;
+      } else {
+        // Treat as a category name and find or create it
+        let cat = await Category.findOne({ name: category });
+        if (!cat) {
+          cat = await Category.create({ name: category });
+        }
+        image.category = cat._id;
+      }
+    }
+
+    if (caption !== undefined) {
+      image.caption = caption;
+    }
+
+    const updatedImage = await image.save();
+    await updatedImage.populate('category');
+    res.json(updatedImage);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server Error' });

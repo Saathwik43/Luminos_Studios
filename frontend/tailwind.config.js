@@ -8,15 +8,20 @@ export default {
     extend: {
       colors: {
         bw: {
-          black: '#000000',
-          dark: '#111111',
-          gray: '#333333',
-          light: '#F3F4F6',
+          black: '#0A0A0C',
+          dark: '#131316',
+          gray: '#252529',
+          light: '#E5E7EB',
           white: '#FFFFFF',
+        },
+        gold: {
+          light: '#FBBF24',
+          DEFAULT: '#D4AF37',
+          dark: '#B45309',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Outfit', 'Inter', 'sans-serif'],
         serif: ['"Playfair Display"', 'serif'],
       },
       keyframes: {

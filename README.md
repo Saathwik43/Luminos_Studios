@@ -1,8 +1,8 @@
-# Black & White Studios — StudioGallery
+# Luminos Studio — LuminosBook
 
-A premium photography portfolio website and staff upload backend created for **Black and White Stories** (Photography Studio, Hyderabad). It features public-facing event galleries, a responsive lightbox, automated WhatsApp inquiries, and a login-protected admin panel for uploading and managing gallery images.
+A premium photography studio portfolio, booking engine, and staff upload CMS created for **Luminos Studio** (Hyderabad). It features public-facing event galleries, a custom featured slideshow, service catalogs, booking carts, automated email notifications (via Nodemailer), and a secure staff dashboard for managing catalog packages, modifying booking statuses, and reordering gallery photos with instant save.
 
-🔗 **Live Website:** [black-and-white-studios-fe.onrender.com](https://black-and-white-studios-fe.onrender.com)
+🔗 **Live Website:** [black-and-white-studios-fe.onrender.com](https://black-and-white-studios-fe.onrender.com) (Update with your Render Static Site URL)
 
 ---
 
@@ -10,10 +10,11 @@ A premium photography portfolio website and staff upload backend created for **B
 
 | Layer | Technology |
 | :--- | :--- |
-| **Frontend** | React (Vite), TailwindCSS, React Router, Lucide Icons |
+| **Frontend** | React (Vite), TailwindCSS, React Router, Lucide Icons, CartContext API |
 | **Backend** | Node.js, Express, Mongoose (MongoDB) |
 | **Storage** | Cloudinary (for compressed image hosting) |
-| **Authentication** | JSON Web Tokens (JWT) & BcryptJS |
+| **Auth** | JSON Web Tokens (JWT) & BcryptJS |
+| **Mail** | Nodemailer (SMTP with secure STARTTLS) |
 
 ---
 
@@ -30,9 +31,22 @@ Create a `.env` file inside the `backend/` directory:
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
-CLOUDINARY_CLOUD_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_key
-CLOUDINARY_API_SECRET=your_cloudinary_secret
+
+# Cloudinary credentials
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
+# SMTP credentials for booking notifications (e.g. Gmail App Password)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=saathwikmailapalli@gmail.com
+SMTP_PASS=your_gmail_app_password
+SMTP_SECURE=false
+
+# Default Admin credentials
+ADMIN_EMAIL=saathwikmailapalli@gmail.com
+ADMIN_PASSWORD=admin12345
 ```
 
 ### 3. Installation
@@ -41,7 +55,14 @@ Install dependencies for both the frontend and backend at once from the root dir
 npm run install:all
 ```
 
-### 4. Running the Application
+### 4. Database Seeding
+To seed standard photography packages, categories, and create the default admin user:
+```bash
+cd backend
+node seedData.js
+```
+
+### 5. Running the Application
 To run the frontend and backend servers concurrently:
 ```bash
 npm run dev
@@ -73,14 +94,20 @@ If you want to run them separately from the root directory:
 ## 🖼️ Features & Checklist Status
 
 ### 🏠 Public Site
-- [x] **Home Page:** Prominent studio branding, hero banner, intro text, and WhatsApp CTA.
-- [x] **Event Galleries:** Interactive masonry/grid layout for categories (Weddings, Portraits, Corporate, etc.).
-- [x] **Lightbox:** Mobile-responsive full-screen preview with previous/next image navigation.
-- [x] **WhatsApp Inquiry:** "Inquire for this event type" button pre-filling text template based on the current gallery.
-- [x] **Contact Page:** Functional contact form that redirects to WhatsApp with filled details.
+- [x] **Rebranded Theme:** Luxurious deep obsidian, warm gold/amber gradient accents, glassmorphic panels, and Outfit + Playfair Display typography.
+- [x] **Featured Work Slider:** Auto-playing, cross-fade slide transitions presenting highlights on the Hero banner.
+- [x] **Portfolio Gallery:** Interactive masonry/grid layout filtering categories (Weddings, Portraits, Corporate, Birthdays) with lazy-loaded images and responsive lightbox counter.
+- [x] **Service Highlights & Catalog:** Card list detailing package prices, description scopes, features checklist, and "Add to Cart" triggers.
+- [x] **Shopping Cart & Checkout:** Cart view showing selections, running total, and a validation checkout form (Name, Email, Event Date, Notes) submitting to MongoDB.
 
-### 🔐 Admin Panel (Staff Upload)
+### 🔐 Admin Panel (Staff CMS Portal)
 - [x] **Secure Login:** Protected dashboard using JWT auth.
-- [x] **Image Upload:** Upload interface (file picker/drag-and-drop) with automated compression.
-- [x] **Image Management:** Delete existing images from active galleries.
-- [x] **Category Management:** Ability to dynamically add/remove new event categories.
+- [x] **Customer Bookings:** View incoming booking requests, examine details, and update booking status (Pending, Confirmed, Completed, Cancelled).
+- [x] **Email Status Automations:** On booking creation, sends admin alert. Once changed to Confirmed or Cancelled, it automatically dispatches confirmation/cancellation receipts to the customer.
+- [x] **Manage Galleries:**
+  - Upload interface (drag-and-drop or select) with automated compression.
+  - Delete portfolio images.
+  - **Dynamic Reordering:** Adjust portfolio sequence by clicking Up/Down buttons which automatically persist coordinates to the database.
+  - **Change Image Category:** Dropdown menu to assign images to active categories or dynamically add a new category inline.
+- [x] **Manage Services:** Add, edit, or delete service package listings.
+- [x] **Category Management:** Dynamically add/remove new event categories.
