@@ -41,13 +41,13 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 # SMTP credentials for booking notifications (e.g. Gmail App Password)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=saathwikmailapalli@gmail.com
+SMTP_USER=your_mail
 SMTP_PASS=your_gmail_app_password
 SMTP_SECURE=false
 
 # Default Admin credentials
-ADMIN_EMAIL=saathwikmailapalli@gmail.com
-ADMIN_PASSWORD=admin12345
+ADMIN_EMAIL=your_mail
+ADMIN_PASSWORD=admin_password
 ```
 
 ### 3. Installation
